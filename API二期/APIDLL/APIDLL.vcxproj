@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{04517338-6217-42A9-A54F-70A682A1BE16}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>APIDLL</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\DEMO\Debug</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;APIDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\..\API二期\i386;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>hid.lib;setupapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;APIDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="apidll.cpp" />
+    <ClCompile Include="ECC_Lib\burn_stack.c" />
+    <ClCompile Include="ECC_Lib\crypt_argchk.c" />
+    <ClCompile Include="ECC_Lib\crypt_find_hash.c" />
+    <ClCompile Include="ECC_Lib\crypt_hash_descriptor.c" />
+    <ClCompile Include="ECC_Lib\crypt_hash_is_valid.c" />
+    <ClCompile Include="ECC_Lib\crypt_prng_is_valid.c" />
+    <ClCompile Include="ECC_Lib\crypt_register_hash.c" />
+    <ClCompile Include="ECC_Lib\crypt_register_prng.c" />
+    <ClCompile Include="ECC_Lib\der_decode_bit_string.c" />
+    <ClCompile Include="ECC_Lib\der_decode_choice.c" />
+    <ClCompile Include="ECC_Lib\der_decode_ia5_string.c" />
+    <ClCompile Include="ECC_Lib\der_decode_integer.c" />
+    <ClCompile Include="ECC_Lib\der_decode_object_identifier.c" />
+    <ClCompile Include="ECC_Lib\der_decode_octet_string.c" />
+    <ClCompile Include="ECC_Lib\der_decode_printable_string.c" />
+    <ClCompile Include="ECC_Lib\der_decode_sequence.c" />
+    <ClCompile Include="ECC_Lib\der_decode_sequence_multi.c" />
+    <ClCompile Include="ECC_Lib\der_decode_short_integer.c" />
+    <ClCompile Include="ECC_Lib\der_decode_utctime.c" />
+    <ClCompile Include="ECC_Lib\der_encode_bit_string.c" />
+    <ClCompile Include="ECC_Lib\der_encode_ia5_string.c" />
+    <ClCompile Include="ECC_Lib\der_encode_integer.c" />
+    <ClCompile Include="ECC_Lib\der_encode_object_identifier.c" />
+    <ClCompile Include="ECC_Lib\der_encode_octet_string.c" />
+    <ClCompile Include="ECC_Lib\der_encode_printable_string.c" />
+    <ClCompile Include="ECC_Lib\der_encode_sequence.c" />
+    <ClCompile Include="ECC_Lib\der_encode_sequence_multi.c" />
+    <ClCompile Include="ECC_Lib\der_encode_short_integer.c" />
+    <ClCompile Include="ECC_Lib\der_encode_utctime.c" />
+    <ClCompile Include="ECC_Lib\der_length_bit_string.c" />
+    <ClCompile Include="ECC_Lib\der_length_ia5_string.c" />
+    <ClCompile Include="ECC_Lib\der_length_integer.c" />
+    <ClCompile Include="ECC_Lib\der_length_object_identifier.c" />
+    <ClCompile Include="ECC_Lib\der_length_octet_string.c" />
+    <ClCompile Include="ECC_Lib\der_length_printable_string.c" />
+    <ClCompile Include="ECC_Lib\der_length_sequence.c" />
+    <ClCompile Include="ECC_Lib\der_length_short_integer.c" />
+    <ClCompile Include="ECC_Lib\der_length_utctime.c" />
+    <ClCompile Include="ECC_Lib\ecc.c" />
+    <ClCompile Include="ECC_Lib\error_to_string.c" />
+    <ClCompile Include="ECC_Lib\hash_memory.c" />
+    <ClCompile Include="ECC_Lib\is_prime.c" />
+    <ClCompile Include="ECC_Lib\md5.c" />
+    <ClCompile Include="ECC_Lib\mpi.c" />
+    <ClCompile Include="ECC_Lib\mpi_to_ltc_error.c" />
+    <ClCompile Include="ECC_Lib\rc4.c" />
+    <ClCompile Include="ECC_Lib\zeromem.c" />
+    <ClCompile Include="makeKey.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="apidll.h" />
+    <ClInclude Include="ECC_Lib\Crypt_prng_descriptor.h" />
+    <ClInclude Include="ECC_Lib\ltc_tommath.h" />
+    <ClInclude Include="ECC_Lib\makeKey.h" />
+    <ClInclude Include="ECC_Lib\rc4.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_argchk.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_cfg.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_cipher.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_custom.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_hash.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_mac.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_macros.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_misc.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_pk.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_pkcs.h" />
+    <ClInclude Include="ECC_Lib\tomcrypt_prng.h" />
+    <ClInclude Include="ECC_Lib\tommath_class.h" />
+    <ClInclude Include="ECC_Lib\tommath_superclass.h" />
+    <ClInclude Include="hidclass.h" />
+    <ClInclude Include="hidpddi.h" />
+    <ClInclude Include="hidpi.h" />
+    <ClInclude Include="hidport.h" />
+    <ClInclude Include="hidsdi.h" />
+    <ClInclude Include="hidusage.h" />
+    <ClInclude Include="makeKey.h" />
+    <ClInclude Include="PcCommand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ECC_Lib\dir.c_" />
+    <None Include="ECC_Lib\Main.ccc" />
+    <None Include="ECC_Lib\Main.c_bk" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

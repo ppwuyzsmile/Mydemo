@@ -1,0 +1,337 @@
+﻿#include "tomcrypt.h"
+#include <string.h>
+#include <stdio.h>
+#include "..\head\macro.h"
+
+void show_mp_int(mp_int *a){ 
+    int i; 
+    for(i = (a->used) - 1; i>=0; i--){ 
+        printf("dp[%d] = %d\n", i, a->dp[i] ); 
+    } 
+} 
+
+#define DEBUG
+#define U8 unsigned char
+#define U16 unsigned int
+#define U32 unsigned long
+#define PUBLIC		1
+#define PRIVATE		0
+
+int prng,hash;
+prng_state prng_st;
+hash_state hash_st;
+
+/*int initPrng ()
+{
+    prng = register_prng (&rc4_desc);               //随机数池序号
+    prng_descriptor[prng].start (&prng_st);           //初始化随机数
+	prng_descriptor[prng].add_entropy ("I want some PRNG",16,&prng_st);		//此处负责给随机数池Seed
+																		//与板上随机数生成模块关联
+    prng_descriptor[prng].ready (&prng_st);			//用Seed去生成PRNG
+}*/
+
+int initHash ()
+{
+    int err;
+    register_hash (&md5_desc);
+    err = hash_descriptor[hash].init(&hash_st);
+}
+int initKey (ecc_key *key,int state)
+{
+
+    (*key).type = state;
+    (*key).idx = 0;
+
+    mp_init (&((*key).pubkey.x));
+    mp_init (&((*key).pubkey.y));
+    mp_init (&((*key).pubkey.z));
+    mp_init (&((*key).k));
+    return 0;
+}
+int initECDSA (ecc_key *key,int state)
+{
+
+    (*key).type = state;
+    (*key).idx = 0;
+
+    mp_init (&((*key).pubkey.x));
+    mp_init (&((*key).pubkey.y));
+    mp_init (&((*key).pubkey.z));
+    mp_init (&((*key).k));
+    return 0;
+}
+
+int initPrng (int* prng,prng_state *prng_st,const U8* seed,int length)
+{
+    *prng = register_prng (&rc4_desc);               //随机数池序号
+    prng_descriptor[*prng].start (prng_st);           //初始化随机数
+	prng_descriptor[*prng].add_entropy (seed,length,prng_st);		//此处负责给随机数池Seed
+																		//与板上随机数生成模块关联
+    prng_descriptor[*prng].ready (prng_st);			//用Seed去生成PRNG
+}
+void getRandom (U8* pGet,int length)
+{
+
+#ifdef DEBUG					//Notice:replace By Real Random
+    U8 buf[] = "1234567";
+    U8* pWrite = pGet;
+
+    memcpy (pWrite,buf,length);
+#endif
+}
+void KDH(int flag,U8* pA,U16 length,U8* output)
+{
+	int i;
+	U32 tmp;
+	U8 *rpA,*wpOut;
+
+	i = initHash ();
+
+	rpA = pA;
+	wpOut = output;
+
+	switch (flag)
+	{
+	case PKI_BK:
+		{
+			hash_memory (i,rpA,length,output,&tmp);
+			break;
+		}
+	case PKI_KDH:
+		{
+			hash_memory (i,rpA,16,wpOut,&tmp);		//1
+			rpA += 16;
+			wpOut += 16;			//需要三次hash，原文分为三块每块16byte.
+			hash_memory (i,rpA,16,wpOut,&tmp);		//2
+			rpA += 16;
+			wpOut += 16;			//需要三次hash，原文分为三块每块16byte.
+			hash_memory (i,rpA,16,wpOut,&tmp);		//3
+		}
+	}
+}
+void getX (ecc_point* pX)
+{
+	int prng,i;
+	prng_state prng_st;
+	ecc_key tmpKey;
+#ifdef DEBUG
+	U8 prng_Str[] = "12345678";
+#else
+	U8 prng_Str[16];
+	getRandom (prng_Str,8);
+#endif
+	initPrng (&prng,&prng_st,prng_Str,strlen ((const char*)prng_Str));
+	i = ecc_make_key (&prng_st,prng,24,&tmpKey);
+
+#ifdef DEBUG
+	printf ("getX: make key %s",error_to_string (i));
+#endif
+
+	mp_copy(&(tmpKey.pubkey.x),&(pX->x));
+	mp_copy(&(tmpKey.pubkey.y),&(pX->y));
+	mp_copy(&(tmpKey.pubkey.z),&(pX->z));
+
+	ecc_free (&tmpKey);
+}
+void getTPK (ecc_point* pX,U32 P,U8* pTPKx)
+{
+	mp_int mP,k;
+	U32 i;
+	ecc_point *G;
+	mp_init (&mP);
+	mp_init (&k);
+	mp_set (&mP,P);
+	
+	G = ecc_new_point ();
+	mp_read_radix(&k, (char *)ecc_sets[0].prime, 64);
+	ecc_mulmod (&mP,pX,G,&k,0);
+	mp_clear (&mP);
+	mp_clear (&k);
+	mp_to_unsigned_bin_n (&(G->x),pTPKx,&i);			//输出TPKt->x 此长度实测一直为0x18
+	ecc_del (G);
+}
+U8 getKey (int flag,U8* RID,U8* TID,ecc_key* pKey)
+{
+	int prng,i;
+	prng_state prng_st;
+	U8 key[100];
+	U32 length;
+#ifdef DEBUG
+	FILE *fp;
+#endif
+	switch (flag)
+	{
+		case PRIVATE:
+			{
+				initKey (pKey,PK_PRIVATE);
+				//Add read file action
+#ifdef DEBUG
+				fp = fopen ("prikey","rb");
+				fread (&length,sizeof(U32),1,fp);		//先读出密钥长度
+				fread (key,1,length,fp);
+				fclose (fp);
+#endif		
+				i = ecc_import ((const unsigned char*)key,length,pKey);
+				printf ("\nERR:%s\n",error_to_string (i));
+				return length;
+			}
+		case PUBLIC:
+			{
+				initKey (pKey,PK_PRIVATE);
+				//Add read file action
+#ifdef DEBUG
+				fp = fopen ("pubkey","rb");
+				fread (&length,sizeof(U32),1,fp);//先读出密钥长度
+				fread (key,1,length,fp);
+				fclose (fp);
+#endif		
+				i = ecc_import ((const unsigned char*)key,length,pKey);
+				return length;
+			}
+		default :
+			{return 0;}
+	}
+}
+//
+void makeSig (U8* pSig,U8* pMsg,U16 size,ecc_key* Prikey)
+{
+	U8 i;
+	U32 r;
+	int prng;
+	prng_state prng_st;
+	U32* length;
+	U8* wSig;
+	wSig = pSig + sizeof(U32);								//空出存放签名长度的位置
+	length = pSig;											//准备写入签名长度
+
+	initPrng (&prng,&prng_st,"Last night",10);				//可随意改动seed
+	i = ecc_sign_hash (pMsg,size,
+						wSig,&r,&prng_st,prng,Prikey);
+	*length = r;
+}
+
+int verifySig (U8* msg,U16 msgLen,U8* sig,ecc_key* pPubKey)
+{
+	int state;
+	U32* rLength;
+	U32* rSig;
+	rSig = sig + sizeof(U32);
+	rLength = sig;
+	return ecc_verify_hash (rSig,*rLength,msg,msgLen,
+							&state,pPubKey);
+
+}
+void getBK (ecc_point* pX,U8* pTPKx,U8* pRNt,U8* pRNr,U8* pBK)
+{
+	ecc_point* r;
+	mp_int k,x;
+	U8 rx[200];							//约使用27 + 2*RN_LEN
+	U8* wRX;
+	int i;
+	U32 length;
+	mp_init (&k);
+	mp_init (&x);
+	wRX = rx;
+	mp_read_unsigned_bin (&k,(const U8*)pTPKx,PKI_TPK_LEN);
+	mp_read_radix(&x, (char *)ecc_sets[0].prime, 64);
+	r = ecc_new_point ();
+	i = ecc_mulmod (&k,pX,r,&x,0);		//r = (Xr•(TPKt.x))
+
+#ifdef DEBUG
+	printf ("getBK:ecc_mulmod :%s\n",error_to_string (i));
+#endif
+
+	mp_to_unsigned_bin_n (&(r->x),rx,&length);			//watch how
+	wRX += length;													//移到r.x末尾
+
+	memcpy (wRX,pRNt,PKI_RN_LEN);
+	wRX += PKI_RN_LEN;
+	memcpy (wRX,pRNr,PKI_RN_LEN);									//r.x||RNt||RNr
+
+	KDH (PKI_BK,rx,(PKI_RN_LEN + PKI_RN_LEN + length),pBK);		//A,B,length,out   -=Hash(A||B)
+}
+void main ()
+{
+	unsigned char *Xt_str = "abcdef123456789";
+	unsigned char *Xr_str = "Just open the r";	//total 16
+	unsigned char *P_str = "Rexding";
+	unsigned char g_str[] = "ABCDEFGHsjaklsjaelncudffqwnn,mcnvzjuhwqoiuefn,mcnv dsjaelncudffqwnn,mcnvzjuhwqoiuefn,mcnv dsjaelncudffqwnn,mcnvzjuhwqoiuefn,mcnv dsjaelncudffqwnn,mcnvzjuhwqoiuefn,mcnv dsja";		//RNr||RNt	32
+	
+	ecc_key pubKey,priKey,get;
+	ecc_point *ecc_pt;
+	ecc_point *esc;
+	mp_int k;
+	mp_int tmp;
+	mp_int out;
+	int i,x;
+	char OIDbuf[100];
+	unsigned long P[3];
+	unsigned char buf[85];
+	unsigned char full[100];
+	unsigned long length;
+	unsigned char tpk[100];
+/*	initPrng ();
+	initHash ();
+	i = ecc_make_key (&prng_st,prng,24,&BK);
+	i = ecc_make_key (&prng_st,prng,24,&S);
+	mp_init (&k);
+	mp_init (&tmp);
+	mp_init (&out);
+	ecc_pt = ecc_new_point ();
+	mp_read_radix (&tmp,g_str,16);
+//	mp_read_unsigned_bin (&tmp,Xt_str,16);
+	mp_read_radix(&k, (char *)ecc_sets[0].prime, 64);
+	i = ecc_mulmod (&(S.pubkey.x),&(BK.pubkey),ecc_pt,&k,0);
+	printf ("%s",error_to_string (i));
+	//der_encode_sequence_multi (buf,&length,LTC_ASN1_INTEGER,1UL,&(ecc_pt->x),
+	//									   LTC_ASN1_INTEGER,1UL,&(ecc_pt->y),
+	//									   LTC_ASN1_INTEGER,1UL,&(ecc_pt->z),
+	//									   LTC_ASN1_EOL,0UL,NULL);		//16BYTE BK
+	mp_read_unsigned_bin (&tmp,Xr_str,16);
+	mp_mul (&tmp,&(ecc_pt->x),&k);
+	der_encode_integer (&(k),buf,&length);
+	i = find_hash("md5");
+	hash_memory(i,buf,length,full,&x);
+
+//	ecc_del (ecc_pt);
+	mp_read_unsigned_bin (&tmp,full,16);
+	mp_read_unsigned_bin (&k,g_str,33);
+	
+	mp_mul (&tmp,&k,&out);							//怎么去凑那个48字节
+	i = mp_unsigned_bin_size(&out);
+//	mp_to_unsigned_bin (&out,full);		
+*/
+	P[0] = 0;		//Universal
+	P[1] = 2;		//Save Int
+	P[2] = 0xffffffff;
+
+	i = der_encode_object_identifier (&P,3,OIDbuf,&length);
+	i = der_decode_object_identifier (OIDbuf,length,&P,&x);
+	printf ("%s",error_to_string (i));
+/*	esc = ecc_new_point ();
+	mp_set (&tmp,P[2]);
+	mp_read_radix(&k, (char *)ecc_sets[0].prime, 64);
+	i = ecc_mulmod (&tmp,&(BK.pubkey),esc,&k,0);
+	printf ("%s",error_to_string (i));
+	i = mp_unsigned_bin_size (&(esc->x));				//一直是0x18
+	memset (full,0xcc,100);
+	mp_to_unsigned_bin (&(esc->x),full);*/
+
+
+//	ecc_del (esc);
+	esc = ecc_new_point ();
+
+	getX (esc);										
+	getTPK (esc,P[2],tpk);
+	getBK (esc,tpk,(U8*)"12345678",(U8*)"abcdefgh",buf);
+	getKey (PUBLIC,"RID","TID",&pubKey);
+	getKey (PRIVATE,"RID","TID",&priKey);
+
+	makeSig (full,g_str,strlen(g_str),&priKey);
+	i = verifySig (g_str,strlen(g_str),full,&pubKey);
+	if (i == CRYPT_OK)
+	{
+		printf ("Verify OK!!!!\n");						//Verify OK
+	}
+
+}

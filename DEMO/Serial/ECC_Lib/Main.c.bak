@@ -1,0 +1,277 @@
+#include "tomcrypt.h"
+//#include <stdio.h>
+//#include <string.h>
+
+int prng,hash;
+prng_state prng_st;
+hash_state hash_st;
+
+typedef struct TEST
+{
+	char flag;
+	int size;
+	char buf[64];
+}testStr;
+
+int initPrng ()
+{
+    prng = register_prng (&rc4_desc);               //随机数池序号
+    prng_descriptor[prng].start (&prng_st);           //获取随机数
+	prng_descriptor[prng].add_entropy ("See you next",12,&prng_st);		//此处负责给随机数池Seed																	//与板上随机数生成模块关联
+    prng_descriptor[prng].ready (&prng_st);			//用Seed去生成PRNG
+}
+
+int initHash ()
+{
+    int err;
+    register_hash (&md5_desc);
+    err = hash_descriptor[hash].init(&hash_st);
+}
+
+int initECDSA (ecc_key *key,int state)
+{
+
+    (*key).type = state;
+    (*key).idx = 0;
+
+    mp_init (&((*key).pubkey.x));
+    mp_init (&((*key).pubkey.y));
+    mp_init (&((*key).pubkey.z));
+    mp_init (&((*key).k));
+    return 0;
+}
+
+//int setKey (ecc_key *key,char* key_X,char* key_Y,char* key_Z,int length)
+//{
+//    mp_read_radix (&((*key).pubkey.x),key_X,length);
+//    mp_read_radix (&((*key).pubkey.y),key_Y,length);
+//    mp_set (&((*key).k),1);
+//    mp_read_radix (&((*key).k),key_Z,length);
+//
+//    return 0;
+//}                                           //单独设置KEY的X,Y,Z
+//
+int makeKey (ecc_key *key,int keySize)
+{
+    ecc_make_key (&prng_st,prng,keySize,key);
+
+    return 0;
+}                   //生成ECC密钥
+
+int importKey (unsigned char *code,unsigned long codeLength,ecc_key *import)
+{
+    return ecc_import (code,codeLength,import);
+}                   //从密码byte串中导出ECC密钥
+
+int exportKey (unsigned char *code,unsigned long *codeLength,int type,ecc_key *key)
+{
+    return ecc_export (code,codeLength,type,key);
+}
+
+int longEncrypt (const unsigned char* input,
+                 unsigned long inlen,
+                 unsigned char* output,
+                 unsigned long* outlen,
+                 prng_state* prng,
+                 int wprng,
+                 int hash,
+                 ecc_key *key)
+{
+    char flag;
+    unsigned char buf[128];
+    int times,err;
+    unsigned long lenPerTimes;
+    const unsigned char *inputHandle;
+    unsigned char *outputHandle;
+
+    inputHandle = input;
+    outputHandle = output;
+
+    if ((inlen & 0xf) != 0)
+    {
+        flag = 1;               //inlen mod 16 != 0,需要多一次
+    }else
+        {
+            flag = 0;
+        }
+    times = (inlen >> 4);         //inlen/16
+
+    for (;times > 0;times--)
+    {
+       err = ecc_encrypt_key (inputHandle,16,outputHandle,&lenPerTimes,prng,wprng,hash,key);
+       (*outlen) += lenPerTimes;
+       outputHandle += lenPerTimes;
+       inputHandle += 16;
+    }                             //每次加密16字节数据
+
+    if (flag)
+    {
+        err = ecc_encrypt_key (inputHandle,16,buf,&lenPerTimes,prng,wprng,hash,key); 
+        memcpy (outputHandle,buf,lenPerTimes);
+		(*outlen) += lenPerTimes;
+    }
+
+    return err;
+    
+}
+
+int longDecrypt (const unsigned char* input,
+                 unsigned long inlen,
+                 unsigned char* output,
+                 unsigned long* outlen,
+                 ecc_key *key)
+{
+    char flag;
+    unsigned char buf[16];
+    int times,err;
+    unsigned long lenPerTimes;
+    const unsigned char *inputHandle;
+    unsigned char *outputHandle;
+
+    inputHandle = input;
+    outputHandle = output;
+	err = 0;
+    times = (inlen / 0x5e);         //
+
+    for (;times > 0;times--)
+    {
+       err = ecc_decrypt_key (inputHandle,0x5e,outputHandle,&lenPerTimes,key); 
+
+       (*outlen) += lenPerTimes;
+       outputHandle += lenPerTimes;
+       inputHandle += 0x5e;
+    }                             //每次解密16字节数据
+
+	return err;
+    
+}
+
+void printOut (char* title,char* input,int length)
+{
+	int i;
+	printf("%s:",title);
+	for (i = 0;i < length;i++)
+	{
+		 printf(" %x",*(input + i));
+	}
+	printf("\n");
+}
+
+
+void main ()
+{
+    ecc_key publicKey,priKey;
+    ecc_key privateKey,pubKey;
+
+    ecc_key getPbKey,getPrKey;
+    unsigned long pubSize,priSize;
+
+     const unsigned char pubKeyCode[100];    //192 bit
+   
+    const unsigned char priKeyCode[100];    //192 bit
+
+    const char msg[] = "Hello,this beautiful and ugly world!!aldsfiqewnmkcxz,ncvjuewahorqndasfadssdsdaadsasj";                         //欲加密的字符串
+    char decryptPlain[100];
+    char encryptPlain[400];
+    char sign[100];
+	char buf[200];
+    unsigned long signSize,decryptSize,encryptSize;
+    int state,err;
+    FILE *fp;
+
+	testStr stu,stu2;
+
+	stu.flag = 1;
+	stu.size = 7 + 6;
+	strcpy (stu.buf,"ABCDEFrrrrrr");
+
+	memcpy (buf,&stu,sizeof (testStr));
+	memcpy (&stu2,buf,sizeof(testStr));
+
+    initPrng ();                                //初始化随机数   
+    initHash ();                                //初始化Hash            使用的是MD5
+    initECDSA (&publicKey,PK_PUBLIC);
+    initECDSA (&privateKey,PK_PRIVATE);          //初始化key
+    decryptSize = 0;
+    encryptSize = 0;
+
+    makeKey (&publicKey,24);           //192bit长的密钥
+    makeKey (&privateKey,24);           //192bit长的密钥
+
+//    priKey.type=PK_PRIVATE;
+//    priKey.idx=0;
+//    mp_init_multi(&priKey.pubkey.x, &priKey.pubkey.y, &priKey.pubkey.z, &priKey.k, NULL);
+//    mp_read_radix(&priKey.pubkey.x, "pXrgVru+Nnchh+Z79jszFAj7Kn9CBVkN", 64);
+//    mp_read_radix(&priKey.pubkey.y, "3F2fpmHKb+3St9hQq9MPUtN2oIx25MGW", 64);
+//    mp_set(&priKey.pubkey.z, 1);
+//    mp_read_radix(&priKey.k, "mmR+WdM2HVibOmEAVXkWiLECsI5YUbzM", 64);
+//
+//    pubKey.type=PK_PUBLIC;
+//    pubKey.idx=0;
+//    mp_init_multi(&pubKey.pubkey.x, &pubKey.pubkey.y, &pubKey.pubkey.z, &pubKey.k, NULL);
+//    mp_read_radix(&pubKey.pubkey.x, "pXrgVru+Nnchh+Z79jszFAj7Kn9CBVkN", 64);
+//    mp_read_radix(&pubKey.pubkey.y, "3F2fpmHKb+3St9hQq9MPUtN2oIx25MGW", 64);
+//    mp_set(&pubKey.pubkey.z, 1);
+//
+//
+//	ecc_export (pubKeyCode,&pubSize,PK_PUBLIC,&pubKey);
+//	ecc_export (priKeyCode,&priSize,PK_PRIVATE,&priKey);
+
+
+  //    exportKey (pubKeyCode,&pubSize,PK_PUBLIC,&privateKey);            //导出公钥到byte串                 <---这两步的目的是将公钥私钥转化为byte串，原来的是俩结构体
+  //   exportKey (priKeyCode,&priSize,PK_PRIVATE,&privateKey);          //导出私钥
+
+    fp = fopen ("PubKey","rb");
+    fread (&pubSize,4,1,fp);        //read length
+    printf ("\nPublic key length:%d\n",pubSize);
+    fread (pubKeyCode,1,pubSize,fp);    //read code
+    fclose (fp);
+
+    fp = fopen ("PriKey","rb");
+    fread (&priSize,4,1,fp);        //read length
+    printf ("\nPrivate key length:%d\n",priSize);
+    fread (priKeyCode,1,priSize,fp);    //read code
+    fclose (fp);
+
+    printOut ("PUBLIC KEY",pubKeyCode,pubSize);
+    printOut ("PRIVATE KEY",priKeyCode,priSize);
+      err =   ecc_import ((unsigned char*)pubKeyCode,pubSize,&getPbKey);
+//    err = importKey ((unsigned char*)pubKeyCode,pubSize,&getPbKey);                        //导入公钥         <--这两步目的是将byte串形式的公钥、私钥变成加密算法可用的结构体
+      err  = ecc_import ((unsigned char*)priKeyCode,priSize,&getPrKey);                        //导入私钥
+
+    printf ("Error:%s",error_to_string (err));
+
+
+
+
+
+	prng = register_prng (&rc4_desc);               //随机数池序号
+    prng_descriptor[prng].start (&prng_st);           //获取随机数
+	prng_descriptor[prng].add_entropy ("I want some PRNG",16,&prng_st);		//此处负责给随机数池Seed																	//与板上随机数生成模块关联
+    prng_descriptor[prng].ready (&prng_st);			//用Seed去生成PRNG
+
+    ecc_sign_hash (msg,strlen(msg),sign,&signSize,&prng_st,prng,&getPrKey);      //签名                 <---此步目的是生成签名信息，用私钥去生成用公钥去验证
+ //   ecc_sign_hash (msg,strlen(msg),sign,&signSize,&prng_st,prng,&privateKey);      //签名                 <---此步目的是生成签名信息，用私钥去生成用公钥去验证
+ //  printf ("Size Of verify:%ld\n",signSize);
+	
+    if (CRYPT_OK == ecc_verify_hash (sign,signSize,msg,strlen(msg),&state,&getPbKey))
+    {
+        printf ("Verify Ok!");                                 //校验成功
+ while (1);
+    }else
+        {
+            printf ("Verify Failed!");                         //校验失败
+while (1);
+        }
+
+    hash = find_hash ("md5");                                   //套用MD5算法给加解密算法
+    err = longEncrypt (msg,strlen (msg) + 1,encryptPlain,&encryptSize,&prng_st,prng,hash,&getPbKey);        //长字符串的加密
+    //                 欲加密字符串|欲加密长度|密文输出缓冲|密文输出长度（输出值）|随机数状态|随机数序号|哈希序号|转换出的私钥结构体
+    //err = ecc_encrypt_key (msg,strlen (msg) + 1,encryptPlain,&encryptSize,&prng_st,prng,hash,&getPbKey);
+ //   printf ("Error:%s\n",error_to_string (err));
+ //   printf ("Length encryptSize:%ld\n",encryptSize);
+    err = longDecrypt (encryptPlain,encryptSize,decryptPlain,&decryptSize,&getPrKey);                       //长字符串的解密
+    //与加密字段含义相同
+//    printf ("Output length decryptSize:%ld\n",decryptSize);
+//    printf ("Decrypt: %s",decryptPlain);
+}

@@ -1,0 +1,160 @@
+﻿生成启动时间为 2014/4/21 17:59:46。
+     1>项目“E:\工作\2.4G项目\MyDEMO\API二期\APIDLL\APIDLL.vcxproj”在节点 2 上(rebuild 个目标)。
+     1>_PrepareForClean:
+         正在删除文件“Debug\APIDLL.lastbuildstate”。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppClean.targets(74,5): warning : 对路径“E:\工作\2.4G项目\MyDEMO\DEMO\Debug\APIDLL.dll”的访问被拒绝。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppClean.targets(74,5): warning : 对路径“E:\工作\2.4G项目\MYDEMO\DEMO\DEBUG\APIDLL.DLL”的访问被拒绝。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(299,5): warning MSB8004: Output 目录未以斜杠结尾。此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
+       InitializeBuildStatus:
+         正在创建“Debug\APIDLL.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D APIDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt apidll.cpp makeKey.cpp
+         makeKey.cpp
+         apidll.cpp
+     1>apidll.cpp(180): warning C4244: “=”: 从“WORD”转换到“BYTE”，可能丢失数据
+     1>apidll.cpp(1752): warning C4244: “=”: 从“WORD”转换到“unsigned char”，可能丢失数据
+     1>apidll.cpp(1864): warning C4244: “=”: 从“WORD”转换到“unsigned char”，可能丢失数据
+     1>apidll.cpp(3511): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>apidll.cpp(3515): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>apidll.cpp(3533): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>apidll.cpp(3537): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+         正在生成代码...
+     1>e:\工作\2.4g项目\mydemo\api二期\apidll\apidll.cpp(1888): warning C4715: “rfWriteFile”: 不是所有的控件路径都返回值
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D APIDLL_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt ECC_Lib\burn_stack.c ECC_Lib\crypt_argchk.c ECC_Lib\crypt_find_hash.c ECC_Lib\crypt_hash_descriptor.c ECC_Lib\crypt_hash_is_valid.c ECC_Lib\crypt_prng_is_valid.c ECC_Lib\crypt_register_hash.c ECC_Lib\crypt_register_prng.c ECC_Lib\der_decode_bit_string.c ECC_Lib\der_decode_choice.c ECC_Lib\der_decode_ia5_string.c ECC_Lib\der_decode_integer.c ECC_Lib\der_decode_object_identifier.c ECC_Lib\der_decode_octet_string.c ECC_Lib\der_decode_printable_string.c ECC_Lib\der_decode_sequence.c ECC_Lib\der_decode_sequence_multi.c ECC_Lib\der_decode_short_integer.c ECC_Lib\der_decode_utctime.c ECC_Lib\der_encode_bit_string.c ECC_Lib\der_encode_ia5_string.c ECC_Lib\der_encode_integer.c ECC_Lib\der_encode_object_identifier.c ECC_Lib\der_encode_octet_string.c ECC_Lib\der_encode_printable_string.c ECC_Lib\der_encode_sequence.c ECC_Lib\der_encode_sequence_multi.c ECC_Lib\der_encode_short_integer.c ECC_Lib\der_encode_utctime.c ECC_Lib\der_length_bit_string.c ECC_Lib\der_length_ia5_string.c ECC_Lib\der_length_integer.c ECC_Lib\der_length_object_identifier.c ECC_Lib\der_length_octet_string.c ECC_Lib\der_length_printable_string.c ECC_Lib\der_length_sequence.c ECC_Lib\der_length_short_integer.c ECC_Lib\der_length_utctime.c ECC_Lib\ecc.c ECC_Lib\error_to_string.c ECC_Lib\hash_memory.c ECC_Lib\is_prime.c ECC_Lib\md5.c ECC_Lib\mpi.c ECC_Lib\mpi_to_ltc_error.c ECC_Lib\rc4.c ECC_Lib\zeromem.c
+         zeromem.c
+         rc4.c
+         mpi_to_ltc_error.c
+         mpi.c
+         md5.c
+         is_prime.c
+         hash_memory.c
+         error_to_string.c
+         ecc.c
+         der_length_utctime.c
+         der_length_short_integer.c
+         der_length_sequence.c
+         der_length_printable_string.c
+         der_length_octet_string.c
+         der_length_object_identifier.c
+         der_length_integer.c
+         der_length_ia5_string.c
+         der_length_bit_string.c
+         der_encode_utctime.c
+     1>ECC_Lib\der_encode_utctime.c(69): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_short_integer.c
+     1>ECC_Lib\der_encode_short_integer.c(73): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         正在生成代码...
+         正在编译...
+         der_encode_sequence_multi.c
+         der_encode_sequence.c
+     1>ECC_Lib\der_encode_sequence.c(156): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_sequence.c(159): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_printable_string.c
+     1>ECC_Lib\der_encode_printable_string.c(52): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_printable_string.c(55): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_octet_string.c
+     1>ECC_Lib\der_encode_octet_string.c(53): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_octet_string.c(56): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_object_identifier.c
+     1>ECC_Lib\der_encode_object_identifier.c(56): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_object_identifier.c(59): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_object_identifier.c(69): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_object_identifier.c(78): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_object_identifier.c(85): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_integer.c
+     1>ECC_Lib\der_encode_integer.c(72): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_integer.c(76): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_integer.c(81): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_ia5_string.c
+     1>ECC_Lib\der_encode_ia5_string.c(52): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_ia5_string.c(55): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_encode_bit_string.c
+     1>ECC_Lib\der_encode_bit_string.c(54): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_bit_string.c(57): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_bit_string.c(71): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>ECC_Lib\der_encode_bit_string.c(77): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+         der_decode_utctime.c
+         der_decode_short_integer.c
+         der_decode_sequence_multi.c
+         der_decode_sequence.c
+         der_decode_printable_string.c
+         der_decode_octet_string.c
+         der_decode_object_identifier.c
+         der_decode_integer.c
+         der_decode_ia5_string.c
+         der_decode_choice.c
+         der_decode_bit_string.c
+         crypt_register_prng.c
+         正在生成代码...
+         正在编译...
+         crypt_register_hash.c
+         crypt_prng_is_valid.c
+         crypt_hash_is_valid.c
+         crypt_hash_descriptor.c
+         crypt_find_hash.c
+         crypt_argchk.c
+         burn_stack.c
+         正在生成代码...
+       ManifestResourceCompile:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\APIDLL.dll.embed.manifest.res" Debug\APIDLL_manifest.rc 
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\DEMO\Debug\APIDLL.dll" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\API二期\i386" hid.lib setupapi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\APIDLL.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"E:\工作\2.4G项目\MyDEMO\DEMO\Debug\APIDLL.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\..\DEMO\Debug\APIDLL.lib" /MACHINE:X86 /DLL Debug\APIDLL.dll.embed.manifest.res
+         Debug\apidll.obj
+         Debug\burn_stack.obj
+         Debug\crypt_argchk.obj
+         Debug\crypt_find_hash.obj
+         Debug\crypt_hash_descriptor.obj
+         Debug\crypt_hash_is_valid.obj
+         Debug\crypt_prng_is_valid.obj
+         Debug\crypt_register_hash.obj
+         Debug\crypt_register_prng.obj
+         Debug\der_decode_bit_string.obj
+         Debug\der_decode_choice.obj
+         Debug\der_decode_ia5_string.obj
+         Debug\der_decode_integer.obj
+         Debug\der_decode_object_identifier.obj
+         Debug\der_decode_octet_string.obj
+         Debug\der_decode_printable_string.obj
+         Debug\der_decode_sequence.obj
+         Debug\der_decode_sequence_multi.obj
+         Debug\der_decode_short_integer.obj
+         Debug\der_decode_utctime.obj
+         Debug\der_encode_bit_string.obj
+         Debug\der_encode_ia5_string.obj
+         Debug\der_encode_integer.obj
+         Debug\der_encode_object_identifier.obj
+         Debug\der_encode_octet_string.obj
+         Debug\der_encode_printable_string.obj
+         Debug\der_encode_sequence.obj
+         Debug\der_encode_sequence_multi.obj
+         Debug\der_encode_short_integer.obj
+         Debug\der_encode_utctime.obj
+         Debug\der_length_bit_string.obj
+         Debug\der_length_ia5_string.obj
+         Debug\der_length_integer.obj
+         Debug\der_length_object_identifier.obj
+         Debug\der_length_octet_string.obj
+         Debug\der_length_printable_string.obj
+         Debug\der_length_sequence.obj
+         Debug\der_length_short_integer.obj
+         Debug\der_length_utctime.obj
+         Debug\ecc.obj
+         Debug\error_to_string.obj
+         Debug\hash_memory.obj
+         Debug\is_prime.obj
+         Debug\md5.obj
+         Debug\mpi.obj
+         Debug\mpi_to_ltc_error.obj
+         Debug\rc4.obj
+         Debug\zeromem.obj
+         Debug\makeKey.obj
+     1>LINK : fatal error LNK1104: 无法打开文件“..\..\DEMO\Debug\APIDLL.dll”
+     1>已完成生成项目“E:\工作\2.4G项目\MyDEMO\API二期\APIDLL\APIDLL.vcxproj”(rebuild 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:04.81

@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\ECC">
+      <UniqueIdentifier>{20235b66-ff87-4369-a543-f84135ff3f93}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="apidll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\burn_stack.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_argchk.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_find_hash.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_hash_descriptor.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_hash_is_valid.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_prng_is_valid.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_register_hash.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\crypt_register_prng.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_bit_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_choice.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_ia5_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_object_identifier.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_octet_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_printable_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_sequence.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_sequence_multi.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_short_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_decode_utctime.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_bit_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_ia5_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_object_identifier.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_octet_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_printable_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_sequence.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_sequence_multi.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_short_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_encode_utctime.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_bit_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_ia5_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_object_identifier.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_octet_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_printable_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_sequence.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_short_integer.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\der_length_utctime.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\ecc.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\error_to_string.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\hash_memory.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\is_prime.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\md5.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\mpi.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\mpi_to_ltc_error.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\rc4.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="ECC_Lib\zeromem.c">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+    <ClCompile Include="makeKey.cpp">
+      <Filter>源文件\ECC</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="apidll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidclass.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidpddi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidpi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidport.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidsdi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="hidusage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PcCommand.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="makeKey.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\Crypt_prng_descriptor.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\ltc_tommath.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\makeKey.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\rc4.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_argchk.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_cfg.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_cipher.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_custom.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_hash.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_mac.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_macros.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_misc.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_pk.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_pkcs.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tomcrypt_prng.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tommath_class.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+    <ClInclude Include="ECC_Lib\tommath_superclass.h">
+      <Filter>源文件\ECC</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ECC_Lib\dir.c_">
+      <Filter>源文件\ECC</Filter>
+    </None>
+    <None Include="ECC_Lib\Main.c_bk">
+      <Filter>源文件\ECC</Filter>
+    </None>
+    <None Include="ECC_Lib\Main.ccc">
+      <Filter>源文件\ECC</Filter>
+    </None>
+  </ItemGroup>
+</Project>

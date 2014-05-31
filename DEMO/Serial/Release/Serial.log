@@ -1,0 +1,65 @@
+﻿生成启动时间为 2013/12/26 14:31:50。
+     1>项目“E:\工作\2.4G项目\MyDEMO\DEMO\Serial\Serial.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Release\Serial.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\Serial.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\Serial.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CMSComm.cpp OnSize.cpp PwdRFDlg.cpp ReaderManageDlg.cpp RegisterTagDlg.cpp Serial.cpp SerialDlg.cpp SetSocketDlg.cpp SleepTagDlg.cpp XPButton.cpp
+         CMSComm.cpp
+         OnSize.cpp
+         PwdRFDlg.cpp
+         ReaderManageDlg.cpp
+     1>ReaderManageDlg.cpp(326): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+         RegisterTagDlg.cpp
+     1>RegisterTagDlg.cpp(241): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>RegisterTagDlg.cpp(248): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>RegisterTagDlg.cpp(273): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : 参见“fopen”的声明
+     1>RegisterTagDlg.cpp(283): warning C4244: “=”: 从“unsigned long”转换到“unsigned char”，可能丢失数据
+     1>RegisterTagDlg.cpp(383): warning C4244: “=”: 从“double”转换到“__int64”，可能丢失数据
+         Serial.cpp
+         SerialDlg.cpp
+     1>SerialDlg.cpp(4): warning C4627: “#include <list>”: 在查找预编译头使用时跳过
+                 将指令添加到“StdAfx.h”或重新生成预编译头
+     1>e:\工作\2.4g项目\mydemo\demo\serial\debug.h(9): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\string.h(105) : 参见“strcpy”的声明
+     1>e:\工作\2.4g项目\mydemo\demo\serial\debug.h(11): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 D:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : 参见“vsprintf”的声明
+     1>SerialDlg.cpp(48): error C2143: 语法错误 : 缺少“;”(在“<”的前面)
+     1>SerialDlg.cpp(48): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+     1>SerialDlg.cpp(781): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(781): error C2228: “.push_back”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(2978): warning C4018: “<”: 有符号/无符号不匹配
+     1>SerialDlg.cpp(3538): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3538): error C2228: “.clear”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(3539): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3539): error C2228: “.push_back”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(3543): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3543): error C2228: “.empty”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(3549): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3549): error C2228: “.front”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(3567): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3567): error C2228: “.pop_front”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+     1>SerialDlg.cpp(3572): error C2065: “MsgEventID”: 未声明的标识符
+     1>SerialDlg.cpp(3572): error C2228: “.empty”的左边必须有类/结构/联合
+                 类型是“'unknown-type'”
+         SetSocketDlg.cpp
+         SleepTagDlg.cpp
+         XPButton.cpp
+     1>XPButton.cpp(177): warning C4065: switch 语句包含“default”但是未包含“case”标签
+     1>XPButton.cpp(202): warning C4065: switch 语句包含“default”但是未包含“case”标签
+     1>已完成生成项目“E:\工作\2.4G项目\MyDEMO\DEMO\Serial\Serial.vcxproj”(build 个目标)的操作 - 失败。
+
+生成失败。
+
+已用时间 00:00:04.09

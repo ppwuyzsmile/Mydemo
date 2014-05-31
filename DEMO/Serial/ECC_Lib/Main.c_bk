@@ -1,0 +1,75 @@
+#include "tomcrypt.h"
+#include <stdio.h>
+#include <string.h>
+
+void main ()
+{
+
+    //随机数状态初始化
+    int pn=register_prng(&rc4_desc);//随机数生成方式，可以选择其他方式，参考crypt.pdf第56页
+
+	const char in[12]="Hello,world";//需要加密的内容（不一定要asc字符）
+    int stat;
+    long len;
+   char out[100];//输出密文的存放
+   unsigned char verify[100];
+   long outlen=100;//密文输出的最大长度（实际上根据密钥是个固定的值）
+   unsigned long verifyLen = 1024;
+    prng_state tg;
+    ecc_key myKey_pr;
+//	ecc_key myKey_pu;
+   char results[100];//输出存放
+   unsigned long resultlen=100;//输出的最大长度
+
+//	static char* test;
+//	test = (char*)malloc (100);
+//	memset (test,1,100);
+    prng_descriptor[pn].start(&tg);
+//    prng_descriptor[pn].add_entropy("add anything here",17,&tg);//17是字符串长度
+    //修改参数取得不同的随机初始化，也可借用windows随机数来初始化
+    //最好不要每次使用相同的随机初始化，以防留有漏洞
+    
+    prng_descriptor[pn].ready(&tg);
+    myKey_pr.type=PK_PRIVATE;
+    myKey_pr.idx=0;
+//    mp_init_multi(, &myKey_pr.pubkey.y, &myKey_pr.pubkey.z, &myKey_pr.k, NULL);
+	mp_init (&myKey_pr.pubkey.x);
+	mp_init (&myKey_pr.pubkey.y);
+	mp_init (&myKey_pr.pubkey.z);
+	mp_init (&myKey_pr.k);
+    mp_read_radix(&myKey_pr.pubkey.x, "2WRjulhHrDMRkAWt86qDYxu7izJctXFc", 64);
+    mp_read_radix(&myKey_pr.pubkey.y, "Rbe+C2VwWQK+2GdHlvzaG0BXduFPAj/u", 64);
+    mp_set(&myKey_pr.pubkey.z, 1);
+    mp_read_radix(&myKey_pr.k, "jIwr+0CximJRnlTkW7ulaqMmVv8QKoe+", 64);
+
+
+
+
+//   printf ("Src:%s\n",in);
+   len = strlen(in);
+//	ecc_private_encrypt(in, strlen(in),out, &outlen,&tg, pn, &myKey_pr);
+    
+	//将in用密钥加密后存再out里，11是输入长度，输入长度的比特（长度×8）不能超过比椭圆曲线的比特数
+	//加密完成后outlen会改变为实际的输出长度
+
+/*   
+    myKey_pu.type=PK_PUBLIC;
+    myKey_pu.idx=0;
+    mp_init_multi(&myKey_pu.pubkey.x, &myKey_pu.pubkey.y, &myKey_pu.pubkey.z, &myKey_pu.k, NULL);
+    mp_read_radix(&myKey_pu.pubkey.x, "3WqN7wsDh5sC4ErvR6txowK2YBIv6hpv", 64);
+    mp_read_radix(&myKey_pu.pubkey.y, "1K31fvvXwV1swv365+U8eqZ+YaltoT0G", 64);
+    mp_set(&myKey_pu.pubkey.z, 1); */
+
+   
+
+    ecc_sign_hash (in,strlen (in),verify,&verifyLen,&tg,pn,&myKey_pr);
+    if (CRYPT_OK == ecc_verify_hash (verify,verifyLen,in,strlen (in),&stat,&myKey_pr))
+    {
+        printf ("Verify OK!\n");
+    }else
+        {
+            printf ("Verify Failed!\n");
+        }
+//	 ecc_public_decrypt(out, outlen,results,&resultlen, &myKey_pu);
+     printf ("%s",results);
+}
